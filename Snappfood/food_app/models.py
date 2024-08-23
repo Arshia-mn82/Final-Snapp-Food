@@ -22,14 +22,20 @@ class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     discount_rate = models.IntegerField()
 
+    def total_rating(self):
+        return sum([food.get_rate() for food in self.frate.all()])
+
     def __str__(self) -> str:
         return self.name
 
 
 class Rate(models.Model):
     rate = models.FloatField()
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='frate')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_rate(self):
+        return self.rate
 
     def __str__(self) -> float:
         return self.rate

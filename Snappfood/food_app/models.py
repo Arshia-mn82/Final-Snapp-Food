@@ -17,8 +17,8 @@ class Food(models.Model):
     price = models.FloatField()
     about = models.TextField()
     stock = models.IntegerField()
-    created = models.DateField()
-    update = models.DateTimeField()
+    created = models.DateField(auto_now=True)
+    update = models.DateTimeField(auto_now_add=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     discount_rate = models.IntegerField()
 

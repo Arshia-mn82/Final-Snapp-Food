@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "SnappfoodDb",
         'USER': 'postgres',
-        'PASSWORD':'Arshia13821382',
+        'PASSWORD':'MAHKAT@78',
         'HOST': 'localhost',
         'PORT':'5432'
         

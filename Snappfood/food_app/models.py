@@ -21,12 +21,19 @@ class Food(models.Model):
     update = models.DateTimeField(auto_now_add=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     discount_spachial = models.BooleanField(default=False)
-    discount_rate = models.IntegerField()
+    discount_rate = models.IntegerField(null=True,blank=True)
 
     def total_rating(self):
         return sum([food.get_rate() for food in self.frate.all()])
 
-    def __str__(self) -> str:
+    def final_price(self):
+        if self.discount_rate:
+            discount_amount = (self.price * self.discount_rate) / 100
+            return self.price - discount_amount
+        return self.price
+
+
+def __str__(self) -> str:
         return self.name
 
 

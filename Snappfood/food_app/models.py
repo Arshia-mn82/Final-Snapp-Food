@@ -11,7 +11,7 @@ class Category(models.Model):
 
 
 class Food(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category)
     name = models.CharField(max_length=50)
     slug = models.CharField(max_length=200)
     price = models.FloatField()
@@ -20,6 +20,7 @@ class Food(models.Model):
     created = models.DateField(auto_now=True)
     update = models.DateTimeField(auto_now_add=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    discount_spachial = models.BooleanField(default=False)
     discount_rate = models.IntegerField()
 
     def total_rating(self):

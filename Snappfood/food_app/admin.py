@@ -4,7 +4,7 @@ from food_app.models import Food,Category,Rate
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
-    list_display = ('final_price',)
+    list_display = ('name',)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

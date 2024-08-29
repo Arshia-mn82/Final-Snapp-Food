@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'food_app',
     'order_app',
-    'restaurant_app'
+    'restaurant_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "SnappfoodDb",
         'USER': 'postgres',
-        'PASSWORD':'MAHKAT@78',
+        'PASSWORD':'Arshia13821382',
         'HOST': 'localhost',
         'PORT':'5432'
         

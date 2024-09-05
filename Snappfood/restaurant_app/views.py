@@ -4,7 +4,8 @@ from django.core import serializers
 from django.http import JsonResponse
 from food_app.models import Food
 from .serializer import RestaurnatSerializer
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # class CategoryShow(View):
 #     def get(self, request, categoryname):
@@ -28,4 +29,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 class RestaurantList(ListAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurnatSerializer
-    
+    permission_classes = [AllowAny]
+
+
+

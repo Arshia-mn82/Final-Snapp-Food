@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from restaurant_app.models import Restaurant
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50)
 

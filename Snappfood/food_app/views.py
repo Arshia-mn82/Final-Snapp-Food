@@ -11,8 +11,8 @@ from rest_framework.generics import (
     DestroyAPIView
 )
 from rest_framework.permissions import AllowAny, IsAdminUser , IsAuthenticated
-
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 class Foodlist(ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
@@ -29,8 +29,10 @@ class Foodlist(ListCreateAPIView):
 class Food(ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
-    
-    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter , filter.OrderingFilter]
+    filterset_fields = ["category"]
+    search_fields = ["name"]
+    ordering_fields = ["price"]
 class DeleteFood(DestroyAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = FoodSerializer
@@ -46,3 +48,4 @@ class AddFood(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+

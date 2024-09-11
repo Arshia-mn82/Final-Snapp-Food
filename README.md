@@ -182,16 +182,3 @@ The project is divided into several Django apps, each handling different aspects
 - **Method**: GET
 - **Description**: Lists all restaurants.
 
-## URLs
-
-### Accounts
-
-**accounts/urls.py**
-
-```python
-from django.urls import path
-from .views import Register
-
-urlpatterns = [
-    path('register/', Register.as_view(), name='register'),
-]

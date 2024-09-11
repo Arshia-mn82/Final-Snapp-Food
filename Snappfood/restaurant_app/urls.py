@@ -1,9 +1,6 @@
-from django.urls import path,include
-from . import views
+from django.urls import path
+from restaurant_app.views import RestaurantList
 
 urlpatterns = [
-    # path('<str:categoryname>', views.CategoryShow.as_view()),
-    # path('restoran/<int:idr>', views.FoodShow.as_view()),
-    path('restaurnatlist' , views.RestaurantList.as_view()),
-
+    path('restaurantlist/', RestaurantList.as_view()),
 ]

@@ -3,12 +3,7 @@ from food_app.models import Food,Category,Rate
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
-    list_display = ('name',)
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'price', 'category', 'restaurant', 'discount_special', 'discount_rate')
 
 @admin.register(Rate)
 class RateAdmin(admin.ModelAdmin):

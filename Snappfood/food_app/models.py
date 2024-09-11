@@ -1,25 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-from restaurant_app.models import Restaurant
-
-class Category(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self) -> str:
-        return self.name
-
+from restaurant_app.models import *
 
 class Food(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE )
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    slug = models.CharField(max_length=200)
     price = models.FloatField()
     about = models.TextField()
     stock = models.IntegerField()
     created = models.DateField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    discount_spachial = models.BooleanField(default=False)
+    discount_special = models.BooleanField(default=False)
     discount_rate = models.IntegerField(null=True, blank=True)
 
     def total_rating(self):
@@ -34,7 +26,6 @@ class Food(models.Model):
     def __str__(self) -> str:
         return self.name
 
-
 class Rate(models.Model):
     rate = models.FloatField()
     food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name="frate")
@@ -43,5 +34,5 @@ class Rate(models.Model):
     def get_rate(self):
         return self.rate
 
-    def __str__(self) -> float:
+    def __str__(self) -> str:
         return self.rate

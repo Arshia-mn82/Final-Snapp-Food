@@ -1,97 +1,197 @@
-# Django Online Food Delivery Project
+# Snappfood Project
 
-## Project Overview
+Snappfood is a Django-based web application designed for managing food orders from restaurants. This README provides an overview of the project's models, views, URLs, and API endpoints.
 
-This project is a Django-based online food delivery platform that allows users to order food from various restaurants, rate foods, and view their order history. The system also supports restaurant management, including categorization and owner details.
+## Project Structure
 
-## Project Breakdown
+The project is divided into several Django apps, each handling different aspects of the application:
 
-### Apps
+- **accounts**: Manages user profiles and wallets.
+- **food**: Handles food items and categories.
+- **order**: Manages orders, order items, and comments.
+- **restaurant**: Manages restaurant data and categories.
 
-1. **`user_profile`**
-   - **Models:**
-     - `Profile`: Extends the Django `User` model to include additional fields for user location and address.
+## Models
 
-2. **`food_app`**
-   - **Models:**
-     - `Category`: Represents food categories.
-     - `Food`: Represents food items, including details such as name, price, stock, and discount information.
-     - `Rate`: Represents user ratings for food items.
-   
-3. **`order_app`**
-   - **Models:**
-     - `Order`: Represents a user's order, including the total price and payment status.
-     - `OrderItem`: Represents items within an order, including the food item and quantity.
-     - `Comment`: Represents user comments associated with orders.
+### Accounts
 
-4. **`restaurant_app`**
-   - **Models:**
-     - `Category`: Represents restaurant categories.
-     - `Restaurant`: Represents restaurant details, including name, owner, location, and phone number.
+**Profile**
 
-## Model Details
+- `user` (ForeignKey): Linked to the Django User model.
+- `x` (FloatField): X-coordinate for the user's location.
+- `y` (FloatField): Y-coordinate for the user's location.
+- `address` (TextField): Address of the user.
 
-### User Profile (`user_profile` app)
+**Wallet**
 
-- **`Profile`**: 
-  - `user`: Foreign key linking to the Django `User` model.
-  - `x` and `y`: Coordinates for user location.
-  - `address`: User's address.
+- `user` (OneToOneField): Linked to the Django User model.
+- `amount` (PositiveBigIntegerField): Amount of money in the wallet.
 
-### Food Management (`food_app` app)
+### Food
 
-- **`Category`**: 
-  - `name`: Name of the category.
+**Category**
 
-- **`Food`**:
-  - `category`: Many-to-many relationship with `Category`.
-  - `name`: Name of the food item.
-  - `slug`: URL-friendly identifier for the food item.
-  - `price`: Price of the food item.
-  - `about`: Description of the food item.
-  - `stock`: Available quantity.
-  - `created`: Date when the food item was created.
-  - `update`: Last update timestamp.
-  - `restaurant`: Foreign key linking to `Restaurant`.
-  - `discount_spachial`: Boolean indicating if there is a special discount.
-  - `discount_rate`: Discount percentage.
+- `name` (CharField): Name of the food category.
 
-- **`Rate`**:
-  - `rate`: Rating value.
-  - `food`: Foreign key linking to `Food`.
-  - `user`: Foreign key linking to `User`.
+**Food**
 
-### Order Management (`order_app` app)
+- `category` (ForeignKey): Linked to the Category model.
+- `name` (CharField): Name of the food item.
+- `slug` (CharField): URL-friendly version of the food name.
+- `price` (FloatField): Price of the food item.
+- `about` (TextField): Description of the food item.
+- `stock` (IntegerField): Number of items in stock.
+- `created` (DateField): Creation date of the food item.
+- `update` (DateTimeField): Last update date of the food item.
+- `restaurant` (ForeignKey): Linked to the Restaurant model.
+- `discount_special` (BooleanField): Flag indicating if the food item has a discount.
+- `discount_rate` (IntegerField): Discount rate on the food item.
 
-- **`Order`**:
-  - `user`: Foreign key linking to `User`.
-  - `paid`: Boolean indicating if the order is paid.
-  - `created`: Timestamp when the order was created.
-  - `delivery_cost`: Delivery cost for the order.
+**Rate**
 
-- **`OrderItem`**:
-  - `order`: Foreign key linking to `Order`.
-  - `foods`: Foreign key linking to `Food`.
-  - `price`: Price of the food item.
-  - `num`: Quantity of the food item.
+- `rate` (FloatField): Rating value.
+- `food` (ForeignKey): Linked to the Food model.
+- `user` (ForeignKey): Linked to the User model.
 
-- **`Comment`**:
-  - `user`: Foreign key linking to `User`.
-  - `comment`: Text of the comment.
-  - `order`: One-to-one relationship with `Order`.
+### Order
 
-### Restaurant Management (`restaurant_app` app)
+**Order**
 
-- **`Category`**:
-  - `name`: Name of the category.
-  - `create`: Timestamp when the category was created.
+- `user` (ForeignKey): Linked to the User model.
+- `paid` (BooleanField): Payment status of the order.
+- `created` (DateTimeField): Order creation date.
+- `delivery_cost` (IntegerField): Delivery cost associated with the order.
+- `status` (CharField): Status of the order (`Pending`, `Preparing`, `Delivered`, `Cancelled`).
 
-- **`Restaurant`**:
-  - `name`: Name of the restaurant.
-  - `owner`: Foreign key linking to `User`.
-  - `x` and `y`: Coordinates for restaurant location.
-  - `phone_number`: Contact number of the restaurant.
-  - `created`: Timestamp when the restaurant was created.
-  - `category`: Many-to-many relationship with `Category`.
+**OrderItem**
 
+- `order` (ForeignKey): Linked to the Order model.
+- `food` (ForeignKey): Linked to the Food model.
+- `price` (FloatField): Price of the food item in the order.
+- `num` (IntegerField): Number of items ordered.
+- `restaurant` (ForeignKey): Linked to the Restaurant model.
 
+**Comment**
+
+- `user` (ForeignKey): Linked to the User model.
+- `comment` (TextField): Text of the comment.
+- `order` (OneToOneField): Linked to the Order model.
+
+### Restaurant
+
+**Category**
+
+- `name` (CharField): Name of the restaurant category.
+- `created` (DateTimeField): Creation date of the category.
+
+**Restaurant**
+
+- `name` (CharField): Name of the restaurant.
+- `owner` (ForeignKey): Linked to the User model (restaurant owner).
+- `x` (FloatField): X-coordinate for the restaurant location.
+- `y` (FloatField): Y-coordinate for the restaurant location.
+- `phone_number` (CharField): Contact phone number of the restaurant.
+- `created` (DateTimeField): Creation date of the restaurant.
+- `category` (ManyToManyField): Linked to the Category model.
+
+## Serializers
+
+### Accounts
+
+**UserRegisterSerializer**
+
+- Serializes the User model for registration.
+
+### Food
+
+**FoodSerializer**
+
+- Serializes the Food model.
+
+### Order
+
+**OrderSerializer**
+
+- Serializes the Order model.
+
+**OrderItemSerializer**
+
+- Serializes the OrderItem model.
+
+### Restaurant
+
+**RestaurantSerializer**
+
+- Serializes the Restaurant model.
+
+## Views
+
+### Accounts
+
+**Register**
+
+- **Endpoint**: `/user/register/`
+- **Method**: POST
+- **Description**: Registers a new user.
+
+### Food
+
+**FoodListView**
+
+- **Endpoint**: `/food/foodlist/`
+- **Method**: GET, POST
+- **Description**: Lists all food items or creates a new food item.
+
+**FoodDetailView**
+
+- **Endpoint**: `/food/food/`
+- **Method**: GET, PATCH, DELETE
+- **Description**: Retrieves, updates, or deletes a food item.
+
+### Order
+
+**CreateOrderView**
+
+- **Endpoint**: `/order/create_order/<user>/<input_food>/<input_num>/`
+- **Method**: POST
+- **Description**: Creates a new order.
+
+**AddCommentView**
+
+- **Endpoint**: `/order/add_comment/<order_id>/`
+- **Method**: POST
+- **Description**: Adds a comment to an order.
+
+**UpdateOrderStatusView**
+
+- **Endpoint**: `/order/update_status/<order_id>/`
+- **Method**: PATCH
+- **Description**: Updates the status of an order.
+
+**MarkOrderAsPaidView**
+
+- **Endpoint**: `/order/mark_as_paid/<order_id>/`
+- **Method**: PATCH
+- **Description**: Marks an order as paid.
+
+### Restaurant
+
+**RestaurantListView**
+
+- **Endpoint**: `/restaurant/restaurants/`
+- **Method**: GET
+- **Description**: Lists all restaurants.
+
+## URLs
+
+### Accounts
+
+**accounts/urls.py**
+
+```python
+from django.urls import path
+from .views import Register
+
+urlpatterns = [
+    path('register/', Register.as_view(), name='register'),
+]

@@ -7,6 +7,7 @@ class Profile(models.Model):
     x = models.FloatField()
     y = models.FloatField()
     address = models.TextField()
+    is_pro = models.BooleanField(default=False)
 
 class Wallet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -24,7 +24,7 @@ class Food(models.Model):
         return self.price
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} - {self.restaurant.name}'
 
 class Rate(models.Model):
     rate = models.FloatField()

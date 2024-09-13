@@ -16,6 +16,7 @@ class Restaurant(models.Model):
     phone_number = models.CharField(max_length=11)
     created = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category)
+    is_pro = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.name

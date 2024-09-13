@@ -18,7 +18,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG_OPTION")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = env("ALLOWED_HOST").split(",")
 
 
 # Application definition
@@ -130,3 +130,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  
+}
+
